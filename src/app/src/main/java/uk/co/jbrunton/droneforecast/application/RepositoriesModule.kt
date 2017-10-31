@@ -10,7 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
-
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 
 /**
@@ -38,6 +38,7 @@ class RepositoriesModule {
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://api.darksky.net")
                 .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build()
 

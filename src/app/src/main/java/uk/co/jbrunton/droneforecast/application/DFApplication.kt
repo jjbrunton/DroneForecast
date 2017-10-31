@@ -1,6 +1,7 @@
 package uk.co.jbrunton.droneforecast.application
 
 import android.app.Application
+import com.squareup.leakcanary.LeakCanary
 
 /**
  * Created by jamie on 30/10/2017.
@@ -13,6 +14,10 @@ class DFApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return
+        }
+        LeakCanary.install(this)
         graph = DaggerApplicationComponent.builder().androidModule(AndroidModule(this)).build()
         graph.inject(this)
     }

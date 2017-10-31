@@ -1,55 +1,43 @@
 package uk.co.jbrunton.droneforecast.activities
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.application.DFApplication
-import uk.co.jbrunton.droneforecast.models.ForecastResponse
-import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
+import uk.co.jbrunton.droneforecast.fragments.WeatherGridFragment
+import uk.co.jbrunton.droneforecast.viewmodels.WeatherGridViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    @Inject lateinit var forecastRepo : ForecastRepository;
+    lateinit var contentFrame: FrameLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         DFApplication.graph.inject(this)
+        this.contentFrame = this.findViewById(R.id.content_frame)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
-        var response = this.forecastRepo.getForecastForLocation("404453f2e4b605045cc0e7c06a7efd95", 42.36F, (-71.0589).toFloat()).enqueue(object : Callback<ForecastResponse> {
-            override fun onResponse(call: Call<ForecastResponse>?, response: Response<ForecastResponse>?) {
-
-                if (response != null && response.isSuccessful) {
-                    //pokemonListListener.onSuccess(response.body())
-                }
-
-
-            }
-
-            override fun onFailure(call: Call<ForecastResponse>?, t: Throwable?) {
-               // pokemonListListener.onFailure(appContext.getString(R.string.error_fetching_data))
-            }
-        })
+                    .setAction("Action", null).show() }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+
+        var transaction = this.fragmentManager.beginTransaction();
+        transaction.replace(R.id.content_frame, WeatherGridFragment())
+        transaction.commit()
 
         nav_view.setNavigationItemSelectedListener(this)
     }
