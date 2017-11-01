@@ -18,9 +18,6 @@ import android.support.v7.widget.GridLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import android.support.v4.widget.SwipeRefreshLayout
 
-
-
-
 class WeatherGridFragment : Fragment() {
     @Inject lateinit var viewModel : WeatherGridViewModel
     lateinit var gridView: RecyclerView

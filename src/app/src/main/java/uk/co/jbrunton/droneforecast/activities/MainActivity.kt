@@ -1,6 +1,7 @@
 package uk.co.jbrunton.droneforecast.activities
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.application.DFApplication
+import uk.co.jbrunton.droneforecast.fragments.SettingsFragment
 import uk.co.jbrunton.droneforecast.fragments.WeatherGridFragment
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherGridViewModel
 import javax.inject.Inject
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         DFApplication.graph.inject(this)
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         this.contentFrame = this.findViewById(R.id.content_frame)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
@@ -71,6 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_camera -> {
                 // Handle the camera action
+                var transaction = this.fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_frame, WeatherGridFragment())
+                transaction.commit()
             }
             R.id.nav_gallery -> {
 
@@ -79,7 +85,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_manage -> {
-
+                var transaction = this.fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_frame, SettingsFragment())
+                transaction.commit()
             }
             R.id.nav_share -> {
 

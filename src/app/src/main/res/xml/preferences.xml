@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sample="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/title_unit_settings">
+
+        <ListPreference
+            android:key="@string/wind_speed_unit_key"
+            android:title="@string/wind_speed_preference_title"
+            android:defaultValue="@string/default_wind_unit"
+            android:summary="@string/wind_speed_preference_summary"
+            android:entries="@array/wind_speed_units_names"
+            android:entryValues="@array/wind_speed_units"
+            android:dialogTitle="@string/wind_speed_dialog_title" />
+        <ListPreference
+            android:key="@string/altitude_unit_key"
+            android:title="@string/altitude_preference_title"
+            android:defaultValue="@string/default_altitude_unit"
+            android:summary="@string/altitude_preference_summary"
+            android:entries="@array/altitude_units_names"
+            android:entryValues="@array/altitude_units"
+            android:dialogTitle="@string/altitude_preference_dialog_title" />
+
+        <ListPreference
+            android:key="@string/temperature_unit_key"
+            android:title="@string/temperature_preference_title"
+            android:defaultValue="@string/default_temperature_unit"
+            android:summary="@string/temperature_preference_summary"
+            android:entries="@array/temperature_units_names"
+            android:entryValues="@array/temperature_units"
+            android:dialogTitle="@string/temperature_preference_dialog_title" />
+
+        <ListPreference
+            android:key="@string/distance_unit_key"
+            android:title="@string/distance_preference_title"
+            android:defaultValue="@string/default_distance_unit"
+            android:summary="@string/distance_preference_summary"
+            android:entries="@array/distance_units_names"
+            android:entryValues="@array/distance_units"
+            android:dialogTitle="@string/distance_preference_dialog_title" />
+
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Limitations">
+        <SeekBarPreference
+            android:key="@string/temperature_min_threshold_key"
+            android:title="@string/temperature_min_threshold_preference_title"
+            android:summary="@string/temperature_min_threshold_preference_summary"
+            android:defaultValue="6"
+            android:max="80"
+            app:showSeekBarValue="true"/>
+
+        <SeekBarPreference
+            android:key="@string/temperature_max_threshold_key"
+            android:title="@string/temperature_max_threshold_preference_title"
+            android:summary="@string/temperature_max_threshold_preference_summary"
+            android:defaultValue="30"
+            app:showSeekBarValue="true"
+            android:max="80"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

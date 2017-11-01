@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wind_speed_units">
+        <item>mph</item>
+        <item>kmh</item>
+        <item>knots</item>
+        <item>ms</item>
+    </string-array>
+    <string-array name="wind_speed_units_names">
+        <item>Miles Per Hour</item>
+        <item>Kilometers Per Hour</item>
+        <item>Knots</item>
+        <item>Meters Per Second</item>
+    </string-array>
+
+    <string-array name="altitude_units">
+        <item>ft</item>
+        <item>m</item>
+    </string-array>
+    <string-array name="altitude_units_names">
+        <item>Feet</item>
+        <item>Meters</item>
+    </string-array>
+
+    <string-array name="temperature_units">
+        <item>c</item>
+        <item>f</item>
+    </string-array>
+    <string-array name="temperature_units_names">
+        <item>Celsius (C)</item>
+        <item>Fahrenheit (F)</item>
+    </string-array>
+
+    <string-array name="distance_units">
+        <item>miles</item>
+        <item>kilometers</item>
+    </string-array>
+    <string-array name="distance_units_names">
+        <item>Miles</item>
+        <item>Kilometers</item>
+    </string-array>
+
+</resources>

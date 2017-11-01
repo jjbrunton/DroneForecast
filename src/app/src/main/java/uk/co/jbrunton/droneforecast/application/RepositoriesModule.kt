@@ -26,7 +26,7 @@ class RepositoriesModule {
         val interceptor = Interceptor({chain ->
             val origResponse = chain.proceed(chain.request())
 
-            val maxAge = 600
+            val maxAge = 6000
             origResponse.newBuilder().header("Cache-Control", "public, max-age=" + maxAge)
                     .build()
         })
