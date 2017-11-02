@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * Created by jamie on 30/10/2017.
  */
 @Singleton
-@Component(modules = arrayOf(AndroidModule::class, RepositoriesModule::class, ViewModelModule::class, ServicesModule::class, FactoriesModule::class))
+@Component(modules = arrayOf(AndroidModule::class, RepositoriesModule::class, ViewModelModule::class, ServicesModule::class, FactoriesModule::class, ProxiesModule::class, ProvidersModule::class))
 interface ApplicationComponent {
     fun inject(application: DFApplication)
 

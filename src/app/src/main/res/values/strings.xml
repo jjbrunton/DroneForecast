@@ -9,11 +9,27 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_unit_settings">Unit Settings</string>
 
+    <string name="overall_status_good">Good Conditions</string>
+    <string name="overall_status_ok">Acceptable Conditions</string>
+    <string name="overall_status_bad">Bad Conditions</string>
+    <string name="overall_status_severe">Warning</string>
+
+    <string name="warning_message_wind_speed">Exercise caution when flying in high winds. Always follow manufacturer recommendations for maximum wind speed for flight.</string>
+    <string name="warning_message_temperature">Exercise caution when flying in high or low temperatures. Always follow manufacturer recommendations on minimum and maximum temperatures. Remember that operating in cold environments reduces discharge capacity.</string>
+    <string name="warning_message_visibility">Exercise caution when flying in low visibility. You should be able to maintain LOS flight where possible. If in doubt, don\'t fly.</string>
+
+    <!-- Widget Titles -->
+    <string name="widget_temperature_title">Temperature</string>
+
     <!-- Default Preferences -->
     <string name="default_wind_unit">mph</string>
     <string name="default_altitude_unit">ft</string>
     <string name="default_temperature_unit">f</string>
     <string name="default_distance_unit">miles</string>
+    <string name="default_max_wind_speed">8</string>
+    <string name="default_max_temperature">30</string>
+    <string name="default_min_temperature">1</string>
+    <string name="default_min_visibility">2</string>
 
     <!-- Preference Strings -->
     <string name="wind_speed_dialog_title">Wind Speed</string>
@@ -37,10 +53,22 @@
 
     <string name="temperature_max_threshold_preference_title">Maximum Temperature</string>
     <string name="temperature_max_threshold_preference_summary">Set the maximum temperature a flight can be conducted</string>
+
+    <string name="wind_speed_max_threshold_preference_title">Maximum Wind Speed</string>
+    <string name="wind_speed_max_threshold_preference_summary">Set the maximum wind speed a flight can be conducted</string>
+
+    <string name="visibility_min_threshold_preference_title">Minimum Visibility</string>
+    <string name="visibility_min_threshold_preference_summary">Set the minimum visibility a flight can be conducted</string>
+
     <string name="wind_speed_unit_key">wind_speed_unit</string>
     <string name="altitude_unit_key">altitude_unit</string>
     <string name="temperature_unit_key">temperature_unit</string>
     <string name="distance_unit_key">distance_unit</string>
+
     <string name="temperature_min_threshold_key">temperature_min_threshold</string>
     <string name="temperature_max_threshold_key">temperature_max_threshold</string>
+    <string name="wind_speed_max_threshold_key">wind_speed_max_threshold</string>
+    <string name="visibility_min_threshold_key">visibility_min_threshold</string>
+    <string name="dialog_add_widget">Add Widget</string>
+
 </resources>

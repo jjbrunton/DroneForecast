@@ -29,9 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         this.contentFrame = this.findViewById(R.id.content_frame)
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show() }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

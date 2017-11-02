@@ -3,6 +3,7 @@ package uk.co.jbrunton.droneforecast.services
 import android.content.Context
 import javax.inject.Singleton
 import android.preference.PreferenceManager
+import uk.co.jbrunton.droneforecast.R
 import javax.measure.quantity.Length
 import javax.measure.quantity.Temperature
 import javax.measure.quantity.Velocity
@@ -19,6 +20,10 @@ class SettingsService(private val context: Context) {
 
     fun getString(key: String) : String {
         return settings.getString(key, "")
+    }
+
+    fun getStringValue(resId: Int) : String {
+        return this.context.getString(resId)
     }
 
     fun getWindUnit() : javax.measure.unit.Unit<Velocity> {
@@ -50,11 +55,27 @@ class SettingsService(private val context: Context) {
         }
     }
 
+    fun saveWidgets(widgets: Set<String>) {
+        this.settings.edit().putStringSet("widgets", widgets).commit()
+    }
+
+    fun getWidgets(): Set<String> {
+        return this.settings.getStringSet("widgets", hashSetOf())
+    }
+
     fun getMinTemperature() : Int {
-        return this.settings.getInt("temperature_min_threshold", 5)
+        return this.settings.getString("temperature_min_threshold", this.getStringValue(R.string.default_min_temperature)).toInt()
     }
 
     fun getMaxTemperature() : Int {
-        return this.settings.getInt("temperature_max_threshold", 50)
+        return this.settings.getString("temperature_max_threshold", this.getStringValue(R.string.default_max_temperature)).toInt()
+    }
+
+    fun getMaxWindSpeed() : Int {
+        return this.settings.getString("wind_speed_max_threshold", this.getStringValue(R.string.default_max_wind_speed)).toInt()
+    }
+
+    fun getMinVisibility() : Int {
+        return this.settings.getString("visibility_min_threshold", this.getStringValue(R.string.default_min_visibility)).toInt()
     }
 }

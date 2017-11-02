@@ -44,21 +44,38 @@
 
     </PreferenceCategory>
     <PreferenceCategory android:title="Limitations">
-        <SeekBarPreference
+        <EditTextPreference
             android:key="@string/temperature_min_threshold_key"
-            android:title="@string/temperature_min_threshold_preference_title"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="number"
+            android:defaultValue="@string/default_min_temperature"
             android:summary="@string/temperature_min_threshold_preference_summary"
-            android:defaultValue="6"
-            android:max="80"
-            app:showSeekBarValue="true"/>
-
-        <SeekBarPreference
+            android:title="@string/temperature_min_threshold_preference_title" />
+        <EditTextPreference
+            android:defaultValue="@string/default_max_temperature"
             android:key="@string/temperature_max_threshold_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="number"
             android:title="@string/temperature_max_threshold_preference_title"
-            android:summary="@string/temperature_max_threshold_preference_summary"
-            android:defaultValue="30"
-            app:showSeekBarValue="true"
-            android:max="80"/>
+            android:summary="@string/temperature_max_threshold_preference_summary"/>
+        <EditTextPreference
+            android:defaultValue="@string/default_max_wind_speed"
+            android:key="@string/wind_speed_max_threshold_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="number"
+            android:title="@string/wind_speed_max_threshold_preference_title"
+            android:summary="@string/wind_speed_max_threshold_preference_summary"/>
+        <EditTextPreference
+            android:defaultValue="@string/default_min_visibility"
+            android:key="@string/visibility_min_threshold_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="number"
+            android:title="@string/visibility_min_threshold_preference_title"
+            android:summary="@string/visibility_min_threshold_preference_summary"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

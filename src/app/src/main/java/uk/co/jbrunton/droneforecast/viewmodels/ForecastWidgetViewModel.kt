@@ -7,7 +7,7 @@ import uk.co.jbrunton.droneforecast.models.WidgetType
 /**
  * Created by jjbrunton on 31/10/2017.
  */
-class ForecastItemViewModel(private val data: String, private val title: String, private val type: WidgetType, val isAcceptable: () -> WeatherStatus) {
+class ForecastWidgetViewModel(private val data: String, private val title: String, private val type: WidgetType, val isAcceptable: () -> WeatherWarningViewModel) {
     val text: String
     get() = this.title
 

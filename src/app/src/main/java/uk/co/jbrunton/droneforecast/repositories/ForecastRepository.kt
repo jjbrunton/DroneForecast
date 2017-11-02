@@ -1,16 +1,25 @@
 package uk.co.jbrunton.droneforecast.repositories
 
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Path
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
+import uk.co.jbrunton.droneforecast.models.ForecastItemResponse
 import uk.co.jbrunton.droneforecast.models.ForecastResponse
+import uk.co.jbrunton.droneforecast.proxies.ForecastProxy
 
 /**
- * Created by jamie on 30/10/2017.
+ * Created by jjbrunton on 01/11/2017.
  */
-interface ForecastRepository {
-    @GET("forecast/{key}/{lat},{lon}?units=si")
-    fun getForecastForLocation(@Path("key") key: String, @Path("lat") lat: Float,
-               @Path("lon") lon: Float)
-            : Observable<ForecastResponse>
+class ForecastRepository(private val forecastProxy: ForecastProxy) {
+    private val forecastSubject: BehaviorSubject<ForecastItemResponse> = BehaviorSubject.create()
+    val forecastStream: Observable<ForecastItemResponse>
+        get() = this.forecastSubject
+
+    fun getCurrentForecast(key: String, lat: Float, lon: Float) : Observable<ForecastItemResponse> {
+        this.forecastProxy.getForecastForLocation(key, lat, lon).subscribeOn(Schedulers.io()).subscribe { this.forecastSubject.onNext(it.currently) }
+
+        return forecastStream
+    }
 }
