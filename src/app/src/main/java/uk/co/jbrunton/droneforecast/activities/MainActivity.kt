@@ -2,6 +2,7 @@ package uk.co.jbrunton.droneforecast.activities
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
@@ -21,6 +22,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var contentFrame: FrameLayout
+    lateinit var weatherFragment: WeatherGridFragment
+    lateinit var settingsFragment: SettingsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +37,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+        this.weatherFragment = WeatherGridFragment()
+        this.settingsFragment = SettingsFragment()
 
         var transaction = this.fragmentManager.beginTransaction();
-        transaction.replace(R.id.content_frame, WeatherGridFragment())
+        transaction.replace(R.id.content_frame, this.weatherFragment)
         transaction.commit()
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -70,9 +75,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
-                // Handle the camera action
                 var transaction = this.fragmentManager.beginTransaction();
-                transaction.replace(R.id.content_frame, WeatherGridFragment())
+                transaction.replace(R.id.content_frame, this.weatherFragment)
                 transaction.commit()
             }
             R.id.nav_gallery -> {
@@ -83,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_manage -> {
                 var transaction = this.fragmentManager.beginTransaction();
-                transaction.replace(R.id.content_frame, SettingsFragment())
+                transaction.replace(R.id.content_frame, this.settingsFragment)
                 transaction.commit()
             }
             R.id.nav_share -> {

@@ -15,11 +15,23 @@ import javax.measure.unit.SI
  * Created by jjbrunton on 01/11/2017.
  */
 class TemperatureWidget(private var forecastStream: Observable<ForecastItemResponse>, private val settingsService: SettingsService) : WeatherWidgetViewModel(forecastStream, settingsService) {
+    override val widgetWeatherState: Observable<WeatherStatus>
+        get() = forecastStream.map {
+            val temperatureToConverter = SI.CELSIUS.getConverterTo(settingsService.getTemperatureUnit())
+            val temperature = temperatureToConverter.convert(Measure.valueOf(it.temperature, SI.CELSIUS).doubleValue(SI.CELSIUS))
+            when {
+                temperature < this.settingsService.getMinTemperature() -> WeatherStatus.PROBLEM
+                temperature > this.settingsService.getMaxTemperature() -> WeatherStatus.PROBLEM
+                else -> WeatherStatus.OK
+            }
+        }
+
     override val widgetProvidesIndication: Boolean
         get() = true
 
     override val widgetIndication: Observable<WeatherWarningViewModel>
         get() = this.forecastStream.map {
+            val temperatureToConverter = SI.CELSIUS.getConverterTo(settingsService.getTemperatureUnit())
             val temperature = temperatureToConverter.convert(Measure.valueOf(it.temperature, SI.CELSIUS).doubleValue(SI.CELSIUS))
             when {
                 temperature < this.settingsService.getMinTemperature() -> WeatherWarningViewModel(WeatherStatus.PROBLEM, this.settingsService.getStringValue(R.string.warning_message_temperature))
@@ -31,8 +43,6 @@ class TemperatureWidget(private var forecastStream: Observable<ForecastItemRespo
     override val widgetKey: String
         get() = "temperature"
 
-    private val temperatureToConverter = SI.CELSIUS.getConverterTo(settingsService.getTemperatureUnit())
-
     override val widgetType: WidgetType
         get() = WidgetType.TEXT
 
@@ -41,6 +51,7 @@ class TemperatureWidget(private var forecastStream: Observable<ForecastItemRespo
 
     override val widgetDataText: Observable<String>
         get() = this.forecastStream.map {
+            val temperatureToConverter = SI.CELSIUS.getConverterTo(settingsService.getTemperatureUnit())
             val temperature = temperatureToConverter.convert(Measure.valueOf(it.temperature, SI.CELSIUS).doubleValue(SI.CELSIUS))
             "%.0f".format(temperature) + settingsService.getTemperatureUnit().toString().toUpperCase()
         }

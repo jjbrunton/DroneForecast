@@ -19,10 +19,14 @@ class WeatherGridViewModel(private val forecastRepo: ForecastRepository,
                            private val overalStatusViewModel: OverallStatusViewModel,
                            private val widgetProvider: WidgetProvider,
                            private val settingsService: SettingsService) {
+    private var canAddWidgetSubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
     private var storedWidgets: ArrayList<WeatherWidgetViewModel> = ArrayList()
     private var activeWidgetsSubject: BehaviorSubject<List<WeatherWidgetViewModel>> = BehaviorSubject.create()
     val overallText: Observable<String>
         get() = this.overalStatusViewModel.statusText
+
+    val canAddWidget: Observable<Boolean>
+        get() = this.canAddWidgetSubject
 
     val allWidgets: List<WeatherWidgetViewModel>
         get() = this.widgetProvider.widgets
@@ -31,13 +35,16 @@ class WeatherGridViewModel(private val forecastRepo: ForecastRepository,
         get() = this.activeWidgetsSubject
 
     init {
-        var storedWidgetKeys = this.settingsService.getWidgets().toList()
+        var storedWidgetKeys = this.settingsService.getWidgets()
         var widgets = storedWidgetKeys.map {
             var key = it
             this.widgetProvider.widgets.first { it.widgetKey == key }
         }
+
         this.storedWidgets.addAll(widgets)
         this.activeWidgetsSubject.onNext(this.storedWidgets)
+        this.canAddWidgetSubject.onNext(this.getAvailableWidgets().any())
+        this.overalStatusViewModel.updateWidgets(this.storedWidgets)
     }
 
     fun refreshData(lat: Float, lon: Float): Observable<List<WeatherWidgetViewModel>> {
@@ -50,17 +57,29 @@ class WeatherGridViewModel(private val forecastRepo: ForecastRepository,
         if (this.storedWidgets.firstOrNull { it.widgetTitle == widgetTitle} == null) {
             var widget = this.widgetProvider.widgets.first { it.widgetTitle == widgetTitle }
             this.storedWidgets.add(widget)
-            this.settingsService.saveWidgets(this.storedWidgets.map { it.widgetKey }.toSet())
+            this.settingsService.saveWidgets(this.storedWidgets.map { it.widgetKey })
             this.activeWidgetsSubject.onNext(this.storedWidgets)
         }
+
+        this.overalStatusViewModel.updateWidgets(this.storedWidgets)
+        this.canAddWidgetSubject.onNext(this.getAvailableWidgets().any())
+    }
+
+    fun widgetOrderChanged(widgetList: List<WeatherWidgetViewModel>) {
+        this.storedWidgets.clear()
+        this.storedWidgets.addAll(widgetList)
+        this.settingsService.saveWidgets(this.storedWidgets.map { it.widgetKey })
     }
 
     fun removeWidget(widget: WeatherWidgetViewModel) {
         if (this.storedWidgets.firstOrNull { it.widgetKey == widget.widgetKey} != null) {
             this.storedWidgets.remove(widget)
-            this.settingsService.saveWidgets(this.storedWidgets.map { it.widgetKey }.toSet())
+            this.settingsService.saveWidgets(this.storedWidgets.map { it.widgetKey })
             this.activeWidgetsSubject.onNext(this.storedWidgets)
         }
+
+        this.overalStatusViewModel.updateWidgets(this.storedWidgets)
+        this.canAddWidgetSubject.onNext(this.getAvailableWidgets().any())
     }
 
     fun getAvailableWidgets() : List<WeatherWidgetViewModel> {

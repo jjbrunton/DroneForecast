@@ -18,10 +18,16 @@ import uk.co.jbrunton.droneforecast.widgets.WeatherWidgetViewModel
 /**
  * Created by jjbrunton on 31/10/2017.
  */
-class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidgetViewModel>, private val dragListener: OnDragStartListener) : RecyclerView.Adapter<WeatherWidgetViewHolder>(), ItemTouchHelperAdapter {
+class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidgetViewModel>, private val dragListener: OnDragStartListener) : RecyclerView.Adapter<WeatherWidgetViewHolder>(), ItemTouchHelperAdapter, WidgetDismissListener {
     private val itemsRemovedSubject: PublishSubject<WeatherWidgetViewModel> = PublishSubject.create()
+    private val itemsReorderedSubject: PublishSubject<List<WeatherWidgetViewModel>> = PublishSubject.create()
+    private var contextItem = -1
+
     val itemsRemovedStream: Observable<WeatherWidgetViewModel>
         get() = this.itemsRemovedSubject
+    val itemsReorderedStream: Observable<List<WeatherWidgetViewModel>>
+        get() = this.itemsReorderedSubject
+
     override fun getItemCount(): Int {
         return this.widgets.size
     }
@@ -51,21 +57,36 @@ class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidg
 
     override fun onBindViewHolder(holder: WeatherWidgetViewHolder, position: Int) {
         holder.setViewModel(this.widgets[position])
-        holder.statusImage.setOnTouchListener(OnTouchListener { v, event ->
+        holder.dismissListener = this
+        holder.dragImage.setOnTouchListener(OnTouchListener { v, event ->
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                 dragListener.onStartDrag(holder)
             }
             false
         })
+
+        holder.itemView.setOnLongClickListener {
+            this.contextItem = position
+            false
+        }
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         val prev = this.widgets.removeAt(fromPosition)
         this.widgets.add(if (toPosition > fromPosition) toPosition - 1 else toPosition, prev)
         this.notifyItemMoved(fromPosition, toPosition)
+        this.itemsReorderedSubject.onNext(this.widgets)
     }
 
     override fun onItemDismiss(position: Int) {
         this.itemsRemovedSubject.onNext(this.widgets[position])
+    }
+
+    override fun onDismissWidget(widgetViewModel: WeatherWidgetViewModel) {
+        this.onItemDismiss(this.widgets.indexOf(widgetViewModel))
+    }
+
+    override fun onContextDismiss() {
+        this.onItemDismiss(this.contextItem)
     }
 }

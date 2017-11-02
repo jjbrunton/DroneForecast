@@ -20,6 +20,13 @@
 
     <!-- Widget Titles -->
     <string name="widget_temperature_title">Temperature</string>
+    <string name="widget_wind_speed_title">Wind Speed</string>
+    <string name="widget_wind_gusts_title">Wind Gusts</string>
+    <string name="widget_cloud_cover_title">Cloud Cover</string>
+    <string name="widget_wind_bearing_title">Wind Bearing</string>
+    <string name="widget_weather_icon_title">Weather</string>
+    <string name="widget_visibility_title">Visibility</string>
+    <string name="widget_rain_prediction_title">Rain Prediction</string>
 
     <!-- Default Preferences -->
     <string name="default_wind_unit">mph</string>

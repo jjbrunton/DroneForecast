@@ -18,17 +18,17 @@ import javax.measure.unit.SI
 class SettingsService(private val context: Context) {
     val settings = PreferenceManager.getDefaultSharedPreferences(this.context)
 
-    fun getString(key: String) : String {
+    fun getString(key: String): String {
         return settings.getString(key, "")
     }
 
-    fun getStringValue(resId: Int) : String {
+    fun getStringValue(resId: Int): String {
         return this.context.getString(resId)
     }
 
-    fun getWindUnit() : javax.measure.unit.Unit<Velocity> {
+    fun getWindUnit(): javax.measure.unit.Unit<Velocity> {
         var unit = this.getString("wind_speed_unit")
-        return when(unit) {
+        return when (unit) {
             "mph" -> NonSI.MILES_PER_HOUR
             "kmh" -> NonSI.KILOMETERS_PER_HOUR
             "knots" -> NonSI.KNOT
@@ -37,45 +37,51 @@ class SettingsService(private val context: Context) {
         }
     }
 
-    fun getTemperatureUnit() : javax.measure.unit.Unit<Temperature> {
+    fun getTemperatureUnit(): javax.measure.unit.Unit<Temperature> {
         var unit = this.getString("temperature_unit")
-        return when(unit) {
+        return when (unit) {
             "c" -> SI.CELSIUS
             "f" -> NonSI.FAHRENHEIT
             else -> SI.CELSIUS
         }
     }
 
-    fun getDistanceUnit() : javax.measure.unit.Unit<Length> {
+    fun getDistanceUnit(): javax.measure.unit.Unit<Length> {
         var unit = this.getString("distance_unit")
-        return when(unit) {
+        return when (unit) {
             "kilometer" -> SI.KILOMETER
             "miles" -> NonSI.MILE
             else -> NonSI.MILE
         }
     }
 
-    fun saveWidgets(widgets: Set<String>) {
-        this.settings.edit().putStringSet("widgets", widgets).commit()
+    fun saveWidgets(widgets: List<String>) {
+        this.settings.edit().putString("widgets", widgets.joinToString()).commit()
     }
 
-    fun getWidgets(): Set<String> {
-        return this.settings.getStringSet("widgets", hashSetOf())
+    fun getWidgets(): List<String> {
+        var keys = this.settings.getString("widgets", "")
+        return if (keys != "") {
+            keys.split(",").map { it.trim() }
+        } else {
+            ArrayList()
+        }
+
     }
 
-    fun getMinTemperature() : Int {
+    fun getMinTemperature(): Int {
         return this.settings.getString("temperature_min_threshold", this.getStringValue(R.string.default_min_temperature)).toInt()
     }
 
-    fun getMaxTemperature() : Int {
+    fun getMaxTemperature(): Int {
         return this.settings.getString("temperature_max_threshold", this.getStringValue(R.string.default_max_temperature)).toInt()
     }
 
-    fun getMaxWindSpeed() : Int {
+    fun getMaxWindSpeed(): Int {
         return this.settings.getString("wind_speed_max_threshold", this.getStringValue(R.string.default_max_wind_speed)).toInt()
     }
 
-    fun getMinVisibility() : Int {
+    fun getMinVisibility(): Int {
         return this.settings.getString("visibility_min_threshold", this.getStringValue(R.string.default_min_visibility)).toInt()
     }
 }
