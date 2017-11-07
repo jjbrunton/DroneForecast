@@ -11,12 +11,12 @@ import uk.co.jbrunton.droneforecast.viewmodels.WeatherWarningViewModel
 /**
  * Created by jjbrunton on 01/11/2017.
  */
-abstract class WeatherWidgetViewModel(forecastStream: Observable<ForecastItemResponse>, settingsService: SettingsService) {
-    abstract val widgetWeatherState: Observable<WeatherStatus>
-    abstract val widgetKey: String
-    abstract val widgetType: WidgetType
-    abstract val widgetTitle: String
-    abstract val widgetDataText: Observable<String>
-    abstract val widgetProvidesIndication: Boolean
-    abstract val widgetIndication: Observable<WeatherWarningViewModel>
+interface WeatherWidget {
+    val widgetWeatherState: Observable<WeatherStatus>
+    val widgetKey: String
+    val widgetType: WidgetType
+    val widgetTitle: String
+    val widgetDataText: Observable<String>
+    val widgetProvidesIndication: Boolean
+    val widgetIndication: Observable<WeatherWarningViewModel>
 }

@@ -7,12 +7,12 @@ import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.models.OverallStatus
 import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import uk.co.jbrunton.droneforecast.services.SettingsService
-import uk.co.jbrunton.droneforecast.widgets.WeatherWidgetViewModel
+import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
 /**
  * Created by jjbrunton on 01/11/2017.
  */
-class OverallStatusViewModel(private var forecastWidgets: List<WeatherWidgetViewModel>,
+class OverallStatusViewModel(private var forecastWidgets: List<WeatherWidget>,
                              private var settingsService: SettingsService) {
     private var statusStream: BehaviorSubject<OverallStatus> = BehaviorSubject.create()
     private var disposeBag: CompositeDisposable = CompositeDisposable()
@@ -36,7 +36,7 @@ class OverallStatusViewModel(private var forecastWidgets: List<WeatherWidgetView
         this.statusStream.onNext(OverallStatus.GOOD)
     }
 
-    fun updateWidgets(widgets: List<WeatherWidgetViewModel>) {
+    fun updateWidgets(widgets: List<WeatherWidget>) {
         this.disposeBag.dispose()
         this.disposeBag = CompositeDisposable()
         this.forecastWidgets = widgets
@@ -47,8 +47,8 @@ class OverallStatusViewModel(private var forecastWidgets: List<WeatherWidgetView
 
         this.disposeBag.add(Observable.zip(statusStreams, { status ->
             var maxStatus = status.maxBy {
-                var status = it as WeatherStatus
-                status.ordinal
+                var innerStatus = it as WeatherStatus
+                innerStatus.ordinal
             }
 
             var maxCount = status.count { it == maxStatus }

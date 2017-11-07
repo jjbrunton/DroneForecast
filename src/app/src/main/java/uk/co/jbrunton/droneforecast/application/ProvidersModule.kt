@@ -2,7 +2,7 @@ package uk.co.jbrunton.droneforecast.application
 
 import dagger.Module
 import dagger.Provides
-import uk.co.jbrunton.droneforecast.factories.ForecastWidgetViewModelFactory
+import uk.co.jbrunton.droneforecast.factories.WeatherWidgetFactory
 import uk.co.jbrunton.droneforecast.providers.WidgetProvider
 import javax.inject.Singleton
 
@@ -14,7 +14,7 @@ class ProvidersModule {
 
     @Provides
     @Singleton
-    fun provideWidgetProvider(forecastWidgetViewModelFactory: ForecastWidgetViewModelFactory) : WidgetProvider {
-        return WidgetProvider(forecastWidgetViewModelFactory)
+    fun provideWidgetProvider(weatherWidgetFactory: WeatherWidgetFactory) : WidgetProvider {
+        return WidgetProvider(weatherWidgetFactory)
     }
 }

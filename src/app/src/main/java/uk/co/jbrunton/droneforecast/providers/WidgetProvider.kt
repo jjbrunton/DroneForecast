@@ -1,16 +1,12 @@
 package uk.co.jbrunton.droneforecast.providers
 
-import uk.co.jbrunton.droneforecast.factories.ForecastWidgetViewModelFactory
-import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
-import uk.co.jbrunton.droneforecast.widgets.WeatherWidgetViewModel
+import uk.co.jbrunton.droneforecast.factories.WeatherWidgetFactory
+import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
 /**
  * Created by jjbrunton on 01/11/2017.
  */
-class WidgetProvider(val forecastWidgetViewModelFactory: ForecastWidgetViewModelFactory) {
-    val widgets: List<WeatherWidgetViewModel>
+class WidgetProvider(private val weatherWidgetFactory: WeatherWidgetFactory) {
+    val widgets: List<WeatherWidget> = this.weatherWidgetFactory.create()
 
-    init {
-        this.widgets = this.forecastWidgetViewModelFactory.create()
-    }
 }

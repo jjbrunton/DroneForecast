@@ -3,7 +3,6 @@ package uk.co.jbrunton.droneforecast.widgets
 import io.reactivex.Observable
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.models.ForecastItemResponse
-import uk.co.jbrunton.droneforecast.models.WeatherIndication
 import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import uk.co.jbrunton.droneforecast.models.WidgetType
 import uk.co.jbrunton.droneforecast.services.SettingsService
@@ -14,7 +13,7 @@ import javax.measure.unit.SI
 /**
  * Created by jjbrunton on 01/11/2017.
  */
-class TemperatureWidget(private var forecastStream: Observable<ForecastItemResponse>, private val settingsService: SettingsService) : WeatherWidgetViewModel(forecastStream, settingsService) {
+class TemperatureWidget(private var forecastStream: Observable<ForecastItemResponse>, private val settingsService: SettingsService) : WeatherWidget {
     override val widgetWeatherState: Observable<WeatherStatus>
         get() = forecastStream.map {
             val temperatureToConverter = SI.CELSIUS.getConverterTo(settingsService.getTemperatureUnit())

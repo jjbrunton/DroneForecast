@@ -13,7 +13,7 @@ import javax.measure.unit.SI
 /**
  * Created by jamie on 02/11/2017.
  */
-class VisibilityWidget(val forecastStream: Observable<ForecastItemResponse>, val settingsService: SettingsService) : WeatherWidgetViewModel(forecastStream, settingsService) {
+class VisibilityWidget(val forecastStream: Observable<ForecastItemResponse>, val settingsService: SettingsService) : WeatherWidget {
     override val widgetKey: String
         get() = "visibilitywidget"
     override val widgetType: WidgetType

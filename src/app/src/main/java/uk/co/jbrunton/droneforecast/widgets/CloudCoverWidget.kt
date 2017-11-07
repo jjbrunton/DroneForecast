@@ -11,7 +11,7 @@ import uk.co.jbrunton.droneforecast.viewmodels.WeatherWarningViewModel
 /**
  * Created by jamie on 02/11/2017.
  */
-class CloudCoverWidget(val forecastStream: Observable<ForecastItemResponse>, val settingsService: SettingsService) : WeatherWidgetViewModel(forecastStream, settingsService) {
+class CloudCoverWidget(val forecastStream: Observable<ForecastItemResponse>, val settingsService: SettingsService) : WeatherWidget {
     override val widgetWeatherState: Observable<WeatherStatus>
         get() = forecastStream.map { WeatherStatus.OK }
     override val widgetKey: String

@@ -7,10 +7,10 @@ import uk.co.jbrunton.droneforecast.widgets.*
 /**
  * Created by jjbrunton on 01/11/2017.
  */
-class ForecastWidgetViewModelFactory(val settingsService: SettingsService, val forecastRepository: ForecastRepository) {
+class WeatherWidgetFactory(val settingsService: SettingsService, val forecastRepository: ForecastRepository) {
 
-    fun create() : List<WeatherWidgetViewModel> {
-        var list = ArrayList<WeatherWidgetViewModel>()
+    fun create() : List<WeatherWidget> {
+        var list = ArrayList<WeatherWidget>()
         list.add(TemperatureWidget(this.forecastRepository.forecastStream, this.settingsService))
         list.add(WindSpeedWidget(this.forecastRepository.forecastStream, this.settingsService))
         list.add(WindGustWidget(this.forecastRepository.forecastStream, this.settingsService))

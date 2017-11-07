@@ -1,6 +1,7 @@
 package uk.co.jbrunton.droneforecast.proxies
 
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import uk.co.jbrunton.droneforecast.models.ForecastResponse
@@ -12,5 +13,5 @@ interface ForecastProxy {
     @GET("forecast/{key}/{lat},{lon}?units=si")
     fun getForecastForLocation(@Path("key") key: String, @Path("lat") lat: Float,
                @Path("lon") lon: Float)
-            : Observable<ForecastResponse>
+            : Single<ForecastResponse>
 }

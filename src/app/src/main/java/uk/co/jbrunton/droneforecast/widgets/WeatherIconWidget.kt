@@ -7,13 +7,11 @@ import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import uk.co.jbrunton.droneforecast.models.WidgetType
 import uk.co.jbrunton.droneforecast.services.SettingsService
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherWarningViewModel
-import javax.measure.Measure
-import javax.measure.unit.SI
 
 /**
  * Created by jamie on 02/11/2017.
  */
-class WeatherIconWidget(val forecastStream: Observable<ForecastItemResponse>, val settingsService: SettingsService) : WeatherWidgetViewModel(forecastStream, settingsService) {
+class WeatherIconWidget(val forecastStream: Observable<ForecastItemResponse>, val settingsService: SettingsService) : WeatherWidget {
     override val widgetKey: String
         get() = "weathericon"
     override val widgetType: WidgetType

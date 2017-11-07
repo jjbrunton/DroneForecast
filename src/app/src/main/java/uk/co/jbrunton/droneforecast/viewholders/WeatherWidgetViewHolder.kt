@@ -9,18 +9,13 @@ import android.widget.TextView
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.extensions.toWeatherIcon
 import uk.co.jbrunton.droneforecast.models.WeatherStatus
-import uk.co.jbrunton.droneforecast.viewmodels.ForecastWidgetViewModel
 import android.content.DialogInterface
 import android.os.Build
-import android.view.MotionEvent
-import android.support.v4.view.MotionEventCompat
 import android.view.ContextMenu
-import android.view.View.OnTouchListener
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.forecast_grid_item.view.*
 import uk.co.jbrunton.droneforecast.adapters.ItemTouchHelperViewHolder
 import uk.co.jbrunton.droneforecast.adapters.WidgetDismissListener
-import uk.co.jbrunton.droneforecast.widgets.WeatherWidgetViewModel
+import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
 
 /**
@@ -33,10 +28,10 @@ class WeatherWidgetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     val dataImage: ImageView? = itemView.findViewById(R.id.data_image)
     val statusImage: ImageView = itemView.findViewById(R.id.status_image)
     val dragImage: ImageView = itemView.findViewById(R.id.drag_image)
-    private lateinit var viewModel: WeatherWidgetViewModel
+    private lateinit var viewModel: WeatherWidget
     lateinit var dismissListener: WidgetDismissListener
 
-    fun setViewModel(viewModel: WeatherWidgetViewModel) {
+    fun setViewModel(viewModel: WeatherWidget) {
         this.viewModel = viewModel
         this.title.text = this.viewModel.widgetTitle
         this.viewModel.widgetDataText.observeOn(AndroidSchedulers.mainThread()).subscribe {

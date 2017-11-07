@@ -18,7 +18,7 @@ class ForecastRepository(private val forecastProxy: ForecastProxy) {
         get() = this.forecastSubject
 
     fun getCurrentForecast(key: String, lat: Float, lon: Float) : Observable<ForecastItemResponse> {
-        this.forecastProxy.getForecastForLocation(key, lat, lon).subscribeOn(Schedulers.io()).subscribe { this.forecastSubject.onNext(it.currently) }
+        this.forecastProxy.getForecastForLocation(key, lat, lon).subscribeOn(Schedulers.io()).subscribe { forecast -> this.forecastSubject.onNext(forecast.currently) }
 
         return forecastStream
     }

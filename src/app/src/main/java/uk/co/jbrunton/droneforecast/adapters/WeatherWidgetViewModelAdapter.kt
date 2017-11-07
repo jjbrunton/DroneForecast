@@ -12,20 +12,20 @@ import android.view.View.OnTouchListener
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import uk.co.jbrunton.droneforecast.viewholders.WeatherWidgetViewHolder
-import uk.co.jbrunton.droneforecast.widgets.WeatherWidgetViewModel
+import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
 
 /**
  * Created by jjbrunton on 31/10/2017.
  */
-class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidgetViewModel>, private val dragListener: OnDragStartListener) : RecyclerView.Adapter<WeatherWidgetViewHolder>(), ItemTouchHelperAdapter, WidgetDismissListener {
-    private val itemsRemovedSubject: PublishSubject<WeatherWidgetViewModel> = PublishSubject.create()
-    private val itemsReorderedSubject: PublishSubject<List<WeatherWidgetViewModel>> = PublishSubject.create()
+class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidget>, private val dragListener: OnDragStartListener) : RecyclerView.Adapter<WeatherWidgetViewHolder>(), ItemTouchHelperAdapter, WidgetDismissListener {
+    private val itemsRemovedSubject: PublishSubject<WeatherWidget> = PublishSubject.create()
+    private val itemsReorderedSubject: PublishSubject<List<WeatherWidget>> = PublishSubject.create()
     private var contextItem = -1
 
-    val itemsRemovedStream: Observable<WeatherWidgetViewModel>
+    val itemsRemovedStream: Observable<WeatherWidget>
         get() = this.itemsRemovedSubject
-    val itemsReorderedStream: Observable<List<WeatherWidgetViewModel>>
+    val itemsReorderedStream: Observable<List<WeatherWidget>>
         get() = this.itemsReorderedSubject
 
     override fun getItemCount(): Int {
@@ -36,7 +36,7 @@ class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidg
         return this.widgets[position].widgetType.ordinal;
     }
 
-    fun setItems(items: MutableList<WeatherWidgetViewModel>) {
+    fun setItems(items: MutableList<WeatherWidget>) {
         this.widgets = items
         this.notifyDataSetChanged()
     }
@@ -82,8 +82,8 @@ class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidg
         this.itemsRemovedSubject.onNext(this.widgets[position])
     }
 
-    override fun onDismissWidget(widgetViewModel: WeatherWidgetViewModel) {
-        this.onItemDismiss(this.widgets.indexOf(widgetViewModel))
+    override fun onDismissWidget(widget: WeatherWidget) {
+        this.onItemDismiss(this.widgets.indexOf(widget))
     }
 
     override fun onContextDismiss() {
