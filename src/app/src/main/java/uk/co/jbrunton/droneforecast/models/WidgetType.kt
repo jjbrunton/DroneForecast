@@ -6,5 +6,6 @@ package uk.co.jbrunton.droneforecast.models
 enum class WidgetType {
     TEXT,
     IMAGE,
-    DOUBLETEXT
+    DOUBLETEXT,
+    LINECHART
 }

@@ -63,7 +63,7 @@ class WeatherGridFragment : Fragment(), OnDragStartListener {
             }
 
 
-            val numberOfColumns = 3
+            val numberOfColumns = 2
             gridView.layoutManager = GridLayoutManager(this.activity, numberOfColumns)
             gridView.adapter = adapter
             gridView.setHasFixedSize(true)
