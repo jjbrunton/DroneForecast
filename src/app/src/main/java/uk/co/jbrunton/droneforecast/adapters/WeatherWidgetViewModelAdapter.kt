@@ -32,10 +32,6 @@ class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidg
         return this.widgets.size
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return this.widgets[position].widgetType.ordinal;
-    }
-
     fun setItems(items: MutableList<WeatherWidget>) {
         this.widgets = items
         this.notifyDataSetChanged()
@@ -44,14 +40,8 @@ class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidg
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherWidgetViewHolder {
         var type = WidgetType.values()[viewType]
         var itemView: View
-        if (type == WidgetType.TEXT) {
             itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.forecast_grid_item, parent, false)
-        } else {
-            itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.forecast_grid_item_image, parent, false)
-        }
-
         return WeatherWidgetViewHolder(itemView)
     }
 

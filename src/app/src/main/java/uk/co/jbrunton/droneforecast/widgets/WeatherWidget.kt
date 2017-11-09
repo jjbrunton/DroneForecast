@@ -12,9 +12,9 @@ import uk.co.jbrunton.droneforecast.viewmodels.WeatherWarningViewModel
  */
 interface WeatherWidget {
     val widgetWeatherState: Observable<WeatherStatus>
+    val widgetView: Observable<View>
     val widgetKey: String
     val widgetTitle: String
     val widgetProvidesIndication: Boolean
     val widgetIndication: Observable<WeatherWarningViewModel>
-    fun renderWidgetContent(container: View, context: Context)
 }

@@ -13,12 +13,12 @@ import uk.co.jbrunton.droneforecast.proxies.ForecastProxy
  * Created by jjbrunton on 01/11/2017.
  */
 class ForecastRepository(private val forecastProxy: ForecastProxy) {
-    private val forecastSubject: BehaviorSubject<ForecastItemResponse> = BehaviorSubject.create()
-    val forecastStream: Observable<ForecastItemResponse>
+    private val forecastSubject: BehaviorSubject<ForecastResponse> = BehaviorSubject.create()
+    val forecastStream: Observable<ForecastResponse>
         get() = this.forecastSubject
 
-    fun getCurrentForecast(key: String, lat: Float, lon: Float) : Observable<ForecastItemResponse> {
-        this.forecastProxy.getForecastForLocation(key, lat, lon).subscribeOn(Schedulers.io()).subscribe { forecast -> this.forecastSubject.onNext(forecast.currently) }
+    fun getCurrentForecast(key: String, lat: Float, lon: Float) : Observable<ForecastResponse> {
+        this.forecastProxy.getForecastForLocation(key, lat, lon).subscribeOn(Schedulers.io()).subscribe { forecast -> this.forecastSubject.onNext(forecast) }
 
         return forecastStream
     }

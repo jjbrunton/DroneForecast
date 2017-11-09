@@ -20,6 +20,7 @@
 
     <!-- Widget Titles -->
     <string name="widget_temperature_title">Temperature</string>
+    <string name="widget_temperature_forecast_title">Temperature Forecast</string>
     <string name="widget_wind_speed_title">Wind Speed</string>
     <string name="widget_wind_gusts_title">Wind Gusts</string>
     <string name="widget_cloud_cover_title">Cloud Cover</string>
