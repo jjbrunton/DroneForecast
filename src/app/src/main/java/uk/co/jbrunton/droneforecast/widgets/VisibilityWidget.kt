@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.models.ForecastItemResponse
 import uk.co.jbrunton.droneforecast.models.ForecastResponse
@@ -60,7 +61,7 @@ class VisibilityWidget(private val forecastStream: Observable<ForecastResponse>,
         }
 
     override val widgetView: Observable<View>
-        get() = forecastStream.map { this.renderWidgetView(it.currently) }
+        get() = forecastStream.observeOn(AndroidSchedulers.mainThread()).map { this.renderWidgetView(it.currently) }
 
     private fun renderWidgetView(forecast: ForecastItemResponse): View {
         val distanceToConverter = SI.KILOMETER.getConverterTo(settingsService.getDistanceUnit())

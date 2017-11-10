@@ -17,11 +17,7 @@ import javax.measure.Measure
 import javax.measure.unit.SI
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineData
-
-
-
-
-
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 /**
@@ -63,29 +59,30 @@ class TemperatureForecastWidget(private val forecastStream: Observable<ForecastR
         get() = settingsService.getStringValue(R.string.widget_temperature_forecast_title)
 
     override val widgetView: Observable<View>
-        get() = forecastStream.map { this.renderWidgetView(it) }
+        get() = forecastStream.observeOn(AndroidSchedulers.mainThread()).map { this.renderWidgetView(it) }
 
     private fun renderWidgetView(forecast: ForecastResponse): View {
         var entries = ArrayList<Entry>()
         forecast.hourly.data.forEach {
-            entries.add(Entry(it.temperature, it.time.toFloat()))
+            entries.add(Entry(it.time.toFloat(), it.temperature))
         }
         val dataSet = LineDataSet(entries, "")
         dataSet.setCircleColor(android.R.color.white)
-        dataSet.color = android.R.color.white
-        dataSet.setDrawValues(false)
+        dataSet.setDrawCircles(false)
         dataSet.setLineWidth(2f)
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER)
         val lineData = LineData(dataSet)
         lineData.setDrawValues(false)
-
         this.chart.data = lineData
-        chart.setDrawGridBackground(false)
-        chart.setDrawBorders(false)
+        //chart.setDrawGridBackground(false)
+        //chart.setDrawBorders(false)
 
 
 
         this.chart.legend.isEnabled = false
+        var description = Description()
+        description.text = " "
+        this.chart.description = description
         // remove axis
         val leftAxis = chart.axisLeft
         leftAxis.isEnabled = false
@@ -94,6 +91,9 @@ class TemperatureForecastWidget(private val forecastStream: Observable<ForecastR
 
         val xAxis = chart.xAxis
         xAxis.isEnabled = false
+        this.chart.setPinchZoom(false)
+        this.chart.setTouchEnabled(false)
+        this.chart.isDoubleTapToZoomEnabled = false
         this.chart.invalidate()
         return this.view
     }

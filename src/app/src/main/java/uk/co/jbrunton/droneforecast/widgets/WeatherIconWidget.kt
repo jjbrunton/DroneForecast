@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.extensions.toWeatherIcon
 import uk.co.jbrunton.droneforecast.models.ForecastItemResponse
@@ -46,7 +47,7 @@ class WeatherIconWidget(private val forecastStream: Observable<ForecastResponse>
         }
 
     override val widgetView: Observable<View>
-        get() = forecastStream.map { this.renderWidgetView(it.currently) }
+        get() = forecastStream.observeOn(AndroidSchedulers.mainThread()).map { this.renderWidgetView(it.currently) }
 
     private fun renderWidgetView(forecast: ForecastItemResponse): View {
         this.dataImage.setImageResource(forecast.icon.toWeatherIcon())

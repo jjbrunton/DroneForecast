@@ -1,6 +1,7 @@
 package uk.co.jbrunton.droneforecast.application
 
 import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -21,5 +22,11 @@ class ServicesModule {
     @Singleton
     fun provideSettingsService(context: Context): SettingsService {
         return SettingsService(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAnalytis(context: Context): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(context)
     }
 }
