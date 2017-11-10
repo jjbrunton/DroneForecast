@@ -5,17 +5,22 @@ import android.app.AlertDialog
 import android.app.Fragment
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Debug
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.trello.rxlifecycle2.LifecycleProvider
+import com.trello.rxlifecycle2.components.RxFragment
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_weather_grid.*
 import uk.co.jbrunton.droneforecast.R
@@ -26,7 +31,7 @@ import uk.co.jbrunton.droneforecast.models.SimpleItemTouchHelperCallback
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherGridViewModel
 import javax.inject.Inject
 
-class WeatherGridFragment : Fragment(), OnDragStartListener {
+class WeatherGridFragment : RxFragment(), OnDragStartListener {
     @Inject lateinit var viewModel : WeatherGridViewModel
     lateinit var gridView: RecyclerView
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -49,9 +54,9 @@ class WeatherGridFragment : Fragment(), OnDragStartListener {
             this.refreshItems()
         })
 
-        this.viewModel.activeWidgets.subscribe {
+        this.viewModel.activeWidgets.bindToLifecycle(this).doOnDispose {Log.d("Subscription", "Unsubscribing") }.subscribe {
             if (this.adapter == null) {
-                adapter = WeatherWidgetViewModelAdapter(it.toMutableList(), this)
+                adapter = WeatherWidgetViewModelAdapter(it.toMutableList(), this, this as LifecycleProvider<Any>)
                 this.adapter!!.itemsRemovedStream.subscribe {
                     this.viewModel.removeWidget(it)
                 }
@@ -66,13 +71,14 @@ class WeatherGridFragment : Fragment(), OnDragStartListener {
             val numberOfColumns = 2
             gridView.layoutManager = GridLayoutManager(this.activity, numberOfColumns)
             gridView.adapter = adapter
+            gridView.adapter.notifyDataSetChanged()
             gridView.setHasFixedSize(true)
             val callback = SimpleItemTouchHelperCallback(this.adapter!!)
             itemTouchHelper = ItemTouchHelper(callback)
             itemTouchHelper.attachToRecyclerView(this.gridView)
         }
 
-        this.viewModel.canAddWidget.observeOn(AndroidSchedulers.mainThread()).subscribe {
+        this.viewModel.canAddWidget.bindToLifecycle(this).observeOn(AndroidSchedulers.mainThread()).subscribe {
             if (it) {
                 this.fab.visibility = View.VISIBLE
             }
@@ -97,7 +103,7 @@ class WeatherGridFragment : Fragment(), OnDragStartListener {
             this.swipeRefreshLayout.isRefreshing = false
         })
 
-        this.viewModel.overallText.observeOn(AndroidSchedulers.mainThread()).subscribe {
+        this.viewModel.overallText.bindToLifecycle(this).observeOn(AndroidSchedulers.mainThread()).subscribe {
             this.overallText.text = it
         }
     }

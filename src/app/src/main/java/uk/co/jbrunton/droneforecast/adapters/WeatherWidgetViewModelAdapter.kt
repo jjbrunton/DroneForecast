@@ -9,6 +9,7 @@ import uk.co.jbrunton.droneforecast.models.WidgetType
 import android.view.MotionEvent
 import android.support.v4.view.MotionEventCompat
 import android.view.View.OnTouchListener
+import com.trello.rxlifecycle2.LifecycleProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import uk.co.jbrunton.droneforecast.viewholders.WeatherWidgetViewHolder
@@ -18,7 +19,7 @@ import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 /**
  * Created by jjbrunton on 31/10/2017.
  */
-class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidget>, private val dragListener: OnDragStartListener) : RecyclerView.Adapter<WeatherWidgetViewHolder>(), ItemTouchHelperAdapter, WidgetDismissListener {
+class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidget>, private val dragListener: OnDragStartListener, private val lifecycleProvider: LifecycleProvider<Any>) : RecyclerView.Adapter<WeatherWidgetViewHolder>(), ItemTouchHelperAdapter, WidgetDismissListener {
     private val itemsRemovedSubject: PublishSubject<WeatherWidget> = PublishSubject.create()
     private val itemsReorderedSubject: PublishSubject<List<WeatherWidget>> = PublishSubject.create()
     private var contextItem = -1
@@ -42,7 +43,7 @@ class WeatherWidgetViewModelAdapter(private var widgets: MutableList<WeatherWidg
         var itemView: View
             itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.forecast_grid_item, parent, false)
-        return WeatherWidgetViewHolder(itemView)
+        return WeatherWidgetViewHolder(itemView, this.lifecycleProvider)
     }
 
     override fun onBindViewHolder(holder: WeatherWidgetViewHolder, position: Int) {
