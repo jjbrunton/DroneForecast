@@ -4,7 +4,9 @@ import dagger.Module
 import dagger.Provides
 import uk.co.jbrunton.droneforecast.providers.WidgetProvider
 import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
+import uk.co.jbrunton.droneforecast.repositories.LocationRepository
 import uk.co.jbrunton.droneforecast.services.SettingsService
+import uk.co.jbrunton.droneforecast.viewmodels.LocationListViewModel
 import uk.co.jbrunton.droneforecast.viewmodels.OverallStatusViewModel
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherGridViewModel
 
@@ -17,12 +19,18 @@ class ViewModelModule {
     fun provideWeatherGridViewModel(weatherRepo: ForecastRepository,
                                     overallStatusViewModel: OverallStatusViewModel,
                                     widgetProvider: WidgetProvider,
-                                    settingsService: SettingsService): WeatherGridViewModel {
-        return WeatherGridViewModel(weatherRepo, overallStatusViewModel, widgetProvider, settingsService)
+                                    settingsService: SettingsService,
+                                    locationRepository: LocationRepository): WeatherGridViewModel {
+        return WeatherGridViewModel(weatherRepo, overallStatusViewModel, widgetProvider, settingsService, locationRepository)
     }
 
     @Provides
     fun providesOverallStatusViewModel(settingsService: SettingsService) : OverallStatusViewModel {
         return OverallStatusViewModel(ArrayList(), settingsService)
+    }
+
+    @Provides
+    fun providesLocationListViewModel(locationRepository: LocationRepository, forecastRepository: ForecastRepository, settingsService: SettingsService) : LocationListViewModel {
+        return LocationListViewModel(locationRepository, forecastRepository, settingsService)
     }
 }

@@ -17,6 +17,8 @@ import javax.measure.unit.SI
 @Singleton
 class SettingsService(private val context: Context) {
     val settings = PreferenceManager.getDefaultSharedPreferences(this.context)
+    val weatherApiKey: String
+        get() = this.getStringValue(R.string.weather_api_key)
 
     fun getString(key: String): String {
         return settings.getString(key, "")

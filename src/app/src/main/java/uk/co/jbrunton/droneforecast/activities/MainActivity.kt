@@ -4,9 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.provider.Settings
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
@@ -21,13 +19,10 @@ import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.application.DFApplication
 import uk.co.jbrunton.droneforecast.fragments.LocationsListFragment
 import uk.co.jbrunton.droneforecast.fragments.SettingsFragment
-import uk.co.jbrunton.droneforecast.fragments.WeatherGridFragment
-import uk.co.jbrunton.droneforecast.viewmodels.WeatherGridViewModel
-import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var contentFrame: FrameLayout
-    lateinit var weatherFragment: WeatherGridFragment
     lateinit var settingsFragment: SettingsFragment
     lateinit var locationsFragment: LocationsListFragment
 
@@ -44,12 +39,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-        this.weatherFragment = WeatherGridFragment()
         this.settingsFragment = SettingsFragment()
         this.locationsFragment = LocationsListFragment()
 
         var transaction = this.fragmentManager.beginTransaction();
-        transaction.replace(R.id.content_frame, this.weatherFragment)
+        transaction.replace(R.id.content_frame, this.locationsFragment)
         transaction.commit()
 
         this.requestPermissionsFromUser()
@@ -110,9 +104,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
-                var transaction = this.fragmentManager.beginTransaction();
-                transaction.replace(R.id.content_frame, this.weatherFragment)
-                transaction.commit()
             }
             R.id.nav_gallery -> {
                 var transaction = this.fragmentManager.beginTransaction();
