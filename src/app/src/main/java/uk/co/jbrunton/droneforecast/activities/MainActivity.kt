@@ -1,10 +1,14 @@
 package uk.co.jbrunton.droneforecast.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -15,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.application.DFApplication
+import uk.co.jbrunton.droneforecast.fragments.LocationsListFragment
 import uk.co.jbrunton.droneforecast.fragments.SettingsFragment
 import uk.co.jbrunton.droneforecast.fragments.WeatherGridFragment
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherGridViewModel
@@ -24,6 +29,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var contentFrame: FrameLayout
     lateinit var weatherFragment: WeatherGridFragment
     lateinit var settingsFragment: SettingsFragment
+    lateinit var locationsFragment: LocationsListFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +46,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         this.weatherFragment = WeatherGridFragment()
         this.settingsFragment = SettingsFragment()
+        this.locationsFragment = LocationsListFragment()
 
         var transaction = this.fragmentManager.beginTransaction();
         transaction.replace(R.id.content_frame, this.weatherFragment)
         transaction.commit()
 
+        this.requestPermissionsFromUser()
+
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    private fun requestPermissionsFromUser() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        100);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -76,7 +115,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
             }
             R.id.nav_gallery -> {
-
+                var transaction = this.fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_frame, this.locationsFragment)
+                transaction.commit()
             }
             R.id.nav_slideshow -> {
 
