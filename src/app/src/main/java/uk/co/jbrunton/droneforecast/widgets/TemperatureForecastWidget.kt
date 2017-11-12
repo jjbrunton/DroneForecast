@@ -3,11 +3,13 @@ package uk.co.jbrunton.droneforecast.widgets
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.models.ForecastResponse
 import uk.co.jbrunton.droneforecast.models.WeatherStatus
@@ -15,9 +17,6 @@ import uk.co.jbrunton.droneforecast.services.SettingsService
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherWarningViewModel
 import javax.measure.Measure
 import javax.measure.unit.SI
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.LineData
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 /**

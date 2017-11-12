@@ -3,7 +3,6 @@ package uk.co.jbrunton.droneforecast.activities
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
@@ -13,11 +12,9 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.trello.rxlifecycle2.LifecycleProvider
-import com.trello.rxlifecycle2.components.RxActivity
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,25 +1,25 @@
 package uk.co.jbrunton.droneforecast.viewholders
 
 import android.app.AlertDialog
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import uk.co.jbrunton.droneforecast.R
-import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import android.content.DialogInterface
 import android.os.Build
+import android.support.v7.widget.CardView
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.ContextMenu
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.adapters.ItemTouchHelperViewHolder
 import uk.co.jbrunton.droneforecast.adapters.WidgetDismissListener
+import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
 

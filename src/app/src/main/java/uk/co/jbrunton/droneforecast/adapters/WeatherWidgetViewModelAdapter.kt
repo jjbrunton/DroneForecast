@@ -1,17 +1,17 @@
 package uk.co.jbrunton.droneforecast.adapters
 
-import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import android.view.View
-import uk.co.jbrunton.droneforecast.R
-import uk.co.jbrunton.droneforecast.models.WidgetType
-import android.view.MotionEvent
 import android.support.v4.view.MotionEventCompat
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.view.View.OnTouchListener
+import android.view.ViewGroup
 import com.trello.rxlifecycle2.LifecycleProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import uk.co.jbrunton.droneforecast.R
+import uk.co.jbrunton.droneforecast.models.WidgetType
 import uk.co.jbrunton.droneforecast.viewholders.WeatherWidgetViewHolder
 import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 

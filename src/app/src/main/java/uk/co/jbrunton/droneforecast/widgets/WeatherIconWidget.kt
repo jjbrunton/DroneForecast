@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import uk.co.jbrunton.droneforecast.R
@@ -12,7 +11,6 @@ import uk.co.jbrunton.droneforecast.extensions.toWeatherIcon
 import uk.co.jbrunton.droneforecast.models.ForecastItemResponse
 import uk.co.jbrunton.droneforecast.models.ForecastResponse
 import uk.co.jbrunton.droneforecast.models.WeatherStatus
-import uk.co.jbrunton.droneforecast.models.WidgetType
 import uk.co.jbrunton.droneforecast.services.SettingsService
 import uk.co.jbrunton.droneforecast.viewmodels.WeatherWarningViewModel
 

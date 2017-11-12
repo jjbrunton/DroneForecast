@@ -1,6 +1,5 @@
 package uk.co.jbrunton.droneforecast.repositories
 
-import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.realm.Realm

@@ -1,40 +1,30 @@
 package uk.co.jbrunton.droneforecast.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.trello.rxlifecycle2.components.RxFragment
-import uk.co.jbrunton.droneforecast.R
-import uk.co.jbrunton.droneforecast.activities.LocationSearchActivity
-import uk.co.jbrunton.droneforecast.application.DFApplication
-import javax.inject.Inject
-import android.support.v4.app.ShareCompat.IntentBuilder
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.gms.location.places.ui.PlacePicker
 import com.trello.rxlifecycle2.LifecycleProvider
-import com.trello.rxlifecycle2.kotlin.bind
+import com.trello.rxlifecycle2.components.RxFragment
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.activities.MainActivity
-import uk.co.jbrunton.droneforecast.adapters.LocationViewModelAdapter
-import uk.co.jbrunton.droneforecast.adapters.WeatherWidgetViewModelAdapter
-import uk.co.jbrunton.droneforecast.models.SimpleItemTouchHelperCallback
-import uk.co.jbrunton.droneforecast.repositories.LocationRepository
-import uk.co.jbrunton.droneforecast.viewmodels.LocationListViewModel
-import android.support.v7.widget.DividerItemDecoration
 import uk.co.jbrunton.droneforecast.activities.WeatherViewActivity
+import uk.co.jbrunton.droneforecast.adapters.LocationViewModelAdapter
 import uk.co.jbrunton.droneforecast.adapters.OnItemClickListener
+import uk.co.jbrunton.droneforecast.application.DFApplication
 import uk.co.jbrunton.droneforecast.viewmodels.LocationItemViewModel
+import uk.co.jbrunton.droneforecast.viewmodels.LocationListViewModel
+import javax.inject.Inject
 
 
 /**

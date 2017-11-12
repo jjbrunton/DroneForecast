@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import io.realm.Realm
 import uk.co.jbrunton.droneforecast.proxies.ForecastProxy
-import javax.inject.Singleton
 import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
 import uk.co.jbrunton.droneforecast.repositories.LocationRepository
+import javax.inject.Singleton
 
 
 /**

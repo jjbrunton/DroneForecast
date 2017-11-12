@@ -1,14 +1,11 @@
 package uk.co.jbrunton.droneforecast.activities
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
-import uk.co.jbrunton.droneforecast.R
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.MapView
 import kotlinx.android.synthetic.main.app_bar_main.*
+import uk.co.jbrunton.droneforecast.R
 
 
 /**

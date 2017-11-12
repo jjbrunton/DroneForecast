@@ -1,9 +1,7 @@
 package uk.co.jbrunton.droneforecast.viewmodels
 
 import io.reactivex.Observable
-import io.reactivex.rxkotlin.*
-import io.reactivex.subjects.BehaviorSubject
-import uk.co.jbrunton.droneforecast.models.ForecastResponse
+import io.reactivex.rxkotlin.zip
 import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
 import uk.co.jbrunton.droneforecast.repositories.LocationRepository
 import uk.co.jbrunton.droneforecast.services.SettingsService

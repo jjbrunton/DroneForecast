@@ -1,9 +1,6 @@
 package uk.co.jbrunton.droneforecast.models
 
-import android.location.Location
-import com.google.android.gms.maps.model.LatLng
 import io.realm.RealmObject
-import java.util.UUID.randomUUID
 import io.realm.annotations.PrimaryKey
 import java.util.*
 

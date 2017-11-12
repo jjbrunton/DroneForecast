@@ -5,10 +5,8 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.leakcanary.LeakCanary
 import io.realm.Realm
-import javax.inject.Inject
-import io.realm.Realm.setDefaultConfiguration
 import io.realm.RealmConfiguration
-
+import javax.inject.Inject
 
 
 /**

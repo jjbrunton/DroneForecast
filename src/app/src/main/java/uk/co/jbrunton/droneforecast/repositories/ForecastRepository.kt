@@ -1,12 +1,9 @@
 package uk.co.jbrunton.droneforecast.repositories
 
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import uk.co.jbrunton.droneforecast.models.ForecastItemResponse
 import uk.co.jbrunton.droneforecast.models.ForecastResponse
 import uk.co.jbrunton.droneforecast.proxies.ForecastProxy
 
