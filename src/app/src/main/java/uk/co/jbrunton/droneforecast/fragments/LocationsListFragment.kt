@@ -11,11 +11,13 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import com.google.android.gms.location.places.ui.PlacePicker
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.components.RxFragment
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.android.schedulers.AndroidSchedulers
 import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.activities.MainActivity
 import uk.co.jbrunton.droneforecast.activities.WeatherViewActivity
@@ -34,12 +36,16 @@ class LocationsListFragment : RxFragment(), OnItemClickListener<LocationItemView
     @Inject lateinit var viewModel: LocationListViewModel
     private var adapter: LocationViewModelAdapter? = null
     private lateinit var locationsList: RecyclerView
+    lateinit private var placeholderContainer: RelativeLayout
+    lateinit private var contentViewContainer: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         DFApplication.graph.inject(this)
         var view = inflater.inflate(R.layout.fragment_location_list, container, false)
         this.locationsList = view.findViewById(R.id.locations)
+        this.contentViewContainer = view.findViewById(R.id.content_container)
+        this.placeholderContainer = view.findViewById(R.id.placeholder_container)
         var fab: FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             val PLACE_PICKER_REQUEST = 105
@@ -50,6 +56,16 @@ class LocationsListFragment : RxFragment(), OnItemClickListener<LocationItemView
 
         if (this.adapter == null) {
             adapter = LocationViewModelAdapter(this.viewModel.locationStream, this as LifecycleProvider<Any>, this)
+        }
+
+        this.viewModel.locationStream.observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this).subscribe {
+            if (it.isNotEmpty()) {
+                this.contentViewContainer.visibility = View.VISIBLE
+                this.placeholderContainer.visibility = View.GONE
+            } else {
+                this.contentViewContainer.visibility = View.GONE
+                this.placeholderContainer.visibility = View.VISIBLE
+            }
         }
 
 

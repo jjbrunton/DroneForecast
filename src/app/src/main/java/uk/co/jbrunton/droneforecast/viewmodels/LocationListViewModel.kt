@@ -12,14 +12,18 @@ import uk.co.jbrunton.droneforecast.services.SettingsService
 class LocationListViewModel(private val locationRepository: LocationRepository, private val forecastRepository: ForecastRepository, private val settingsService: SettingsService) {
     val locationStream: Observable<List<LocationItemViewModel>>
         get() = this.locationRepository.locations.flatMap{
+            if(it.isEmpty()) {
+                Observable.just(ArrayList<LocationItemViewModel>())
+            } else {
 
-            it.map {
-                val location = it
-                this.forecastRepository.getCurrentForecast(settingsService.weatherApiKey, location.lat!!.toFloat(), location.lng!!.toFloat()).map {
-                    LocationItemViewModel(location, it, settingsService)
-                }.toObservable()
-            }.zip {
-                it
+                it.map {
+                    val location = it
+                    this.forecastRepository.getCurrentForecast(settingsService.weatherApiKey, location.lat!!.toFloat(), location.lng!!.toFloat()).map {
+                        LocationItemViewModel(location, it, settingsService)
+                    }.toObservable()
+                }.zip {
+                    it
+                }
             }
         }
 

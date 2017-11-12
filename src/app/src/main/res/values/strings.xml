@@ -79,6 +79,11 @@
     <string name="wind_speed_max_threshold_key">wind_speed_max_threshold</string>
     <string name="visibility_min_threshold_key">visibility_min_threshold</string>
     <string name="dialog_add_widget">Add Widget</string>
+
+    <!-- Placeholder Text -->
     <string name="widget_none_to_display">No weather widgets to display...</string>
+    <string name="locations_none_to_display">No locations added, start by adding one...</string>
+    <string name="nav_drawer_locations">Locations</string>
+    <string name="nav_drawer_settings">Settings</string>
 
 </resources>
