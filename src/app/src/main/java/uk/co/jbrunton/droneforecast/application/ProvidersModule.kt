@@ -1,5 +1,6 @@
 package uk.co.jbrunton.droneforecast.application
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import uk.co.jbrunton.droneforecast.factories.WeatherWidgetFactory
@@ -14,7 +15,7 @@ class ProvidersModule {
 
     @Provides
     @Singleton
-    fun provideWidgetProvider(weatherWidgetFactory: WeatherWidgetFactory) : WidgetProvider {
-        return WidgetProvider(weatherWidgetFactory)
+    fun provideWidgetProvider(weatherWidgetFactory: WeatherWidgetFactory, context: Context) : WidgetProvider {
+        return WidgetProvider(weatherWidgetFactory, context)
     }
 }

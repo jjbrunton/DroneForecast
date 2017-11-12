@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DroneForecast</string>
+    <string name="weather_api_key">404453f2e4b605045cc0e7c06a7efd95</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,6 +21,7 @@
 
     <!-- Widget Titles -->
     <string name="widget_temperature_title">Temperature</string>
+    <string name="widget_temperature_forecast_title">Temperature Forecast</string>
     <string name="widget_wind_speed_title">Wind Speed</string>
     <string name="widget_wind_gusts_title">Wind Gusts</string>
     <string name="widget_cloud_cover_title">Cloud Cover</string>
@@ -77,5 +79,6 @@
     <string name="wind_speed_max_threshold_key">wind_speed_max_threshold</string>
     <string name="visibility_min_threshold_key">visibility_min_threshold</string>
     <string name="dialog_add_widget">Add Widget</string>
+    <string name="widget_none_to_display">No weather widgets to display...</string>
 
 </resources>

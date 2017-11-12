@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="widgetNeutral">#607D8B</color>
+    <color name="widgetBad">#E74E3E</color>
+    <color name="widgetWarning">#FF9700</color>
 </resources>

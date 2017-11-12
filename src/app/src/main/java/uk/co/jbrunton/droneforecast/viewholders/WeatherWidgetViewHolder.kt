@@ -1,52 +1,53 @@
 package uk.co.jbrunton.droneforecast.viewholders
 
 import android.app.AlertDialog
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import uk.co.jbrunton.droneforecast.R
-import uk.co.jbrunton.droneforecast.extensions.toWeatherIcon
-import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import android.content.DialogInterface
 import android.os.Build
+import android.support.v7.widget.CardView
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.ContextMenu
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
+import com.trello.rxlifecycle2.LifecycleProvider
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.adapters.ItemTouchHelperViewHolder
 import uk.co.jbrunton.droneforecast.adapters.WidgetDismissListener
+import uk.co.jbrunton.droneforecast.models.WeatherStatus
 import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
 
 /**
  * Created by jjbrunton on 31/10/2017.
  */
-class WeatherWidgetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnCreateContextMenuListener {
+class WeatherWidgetViewHolder(itemView: View, private val lifecycleProvider: LifecycleProvider<Any>) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnCreateContextMenuListener {
     val title: TextView = itemView.findViewById(R.id.item_text)
-    val data: TextView? = itemView.findViewById(R.id.data_text)
+    val widgetContent: RelativeLayout = itemView.findViewById(R.id.widget_content)
     val cardView: CardView = itemView.findViewById(R.id.card_view)
-    val dataImage: ImageView? = itemView.findViewById(R.id.data_image)
-    val statusImage: ImageView = itemView.findViewById(R.id.status_image)
     val dragImage: ImageView = itemView.findViewById(R.id.drag_image)
     private lateinit var viewModel: WeatherWidget
     lateinit var dismissListener: WidgetDismissListener
+    private var disposeBag = CompositeDisposable()
 
     fun setViewModel(viewModel: WeatherWidget) {
+        this.disposeBag.dispose()
+        this.disposeBag = CompositeDisposable()
         this.viewModel = viewModel
         this.title.text = this.viewModel.widgetTitle
-        this.viewModel.widgetDataText.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            this.data?.text = it
-            this.dataImage?.setImageDrawable(this.itemView.context.getDrawable(it.toWeatherIcon()))
-        }
         itemView.setOnCreateContextMenuListener(this)
 
         if(viewModel.widgetProvidesIndication) {
-            this.statusImage.visibility = View.VISIBLE
-            this.viewModel.widgetIndication.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            this.viewModel.widgetIndication.observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this.lifecycleProvider).subscribe {
                 when (it.weatherState) {
-                    WeatherStatus.OK -> statusImage.setImageDrawable(this.itemView.context.getDrawable(R.drawable.ic_tick))
-                    WeatherStatus.WARNING -> statusImage.setImageDrawable(this.itemView.context.getDrawable(R.drawable.ic_warning))
-                    WeatherStatus.PROBLEM -> statusImage.setImageDrawable(this.itemView.context.getDrawable(R.drawable.ic_cross))
+                    WeatherStatus.OK -> this.cardView.setCardBackgroundColor(this.itemView.resources.getColor(R.color.widgetNeutral))
+                    WeatherStatus.WARNING -> this.cardView.setCardBackgroundColor(this.itemView.resources.getColor(R.color.widgetWarning))
+                    WeatherStatus.PROBLEM -> this.cardView.setCardBackgroundColor(this.itemView.resources.getColor(R.color.widgetBad))
                 }
 
                 var explanationViewModel = it
@@ -67,11 +68,17 @@ class WeatherWidgetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                     }
                 }
             }
-        } else {
-            this.statusImage.visibility = View.GONE
         }
 
-
+        this.viewModel.widgetView.bindToLifecycle(this.lifecycleProvider).doOnDispose { Log.d("WeatherWidgetViewHolder", "Disposing view subscription") }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            this.widgetContent.removeAllViews()
+            if (it.parent != null) {
+                var parent = it.parent as ViewGroup
+                parent.removeView(it)
+            }
+            it.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            this.widgetContent.addView(it)
+        }
     }
 
     override fun onItemSelected() {
@@ -81,7 +88,6 @@ class WeatherWidgetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
-        menu.setHeaderTitle("Edit Widget");
         menu.add(0, v.getId(), 0, "Delete")
     }
 

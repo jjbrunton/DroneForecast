@@ -3,8 +3,10 @@ package uk.co.jbrunton.droneforecast.viewmodels
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import uk.co.jbrunton.droneforecast.R
 import uk.co.jbrunton.droneforecast.providers.WidgetProvider
 import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
+import uk.co.jbrunton.droneforecast.repositories.LocationRepository
 import uk.co.jbrunton.droneforecast.services.SettingsService
 import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 
@@ -15,15 +17,20 @@ import uk.co.jbrunton.droneforecast.widgets.WeatherWidget
 class WeatherGridViewModel(private val forecastRepo: ForecastRepository,
                            private val overalStatusViewModel: OverallStatusViewModel,
                            private val widgetProvider: WidgetProvider,
-                           private val settingsService: SettingsService) {
+                           private val settingsService: SettingsService,
+                           private val locationRepository: LocationRepository) {
     private var canAddWidgetSubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
     private var storedWidgets: ArrayList<WeatherWidget> = ArrayList()
+    private val isLoadingSubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
     private var activeWidgetsSubject: BehaviorSubject<List<WeatherWidget>> = BehaviorSubject.create()
     val overallText: Observable<String>
         get() = this.overalStatusViewModel.statusText
 
     val canAddWidget: Observable<Boolean>
         get() = this.canAddWidgetSubject
+
+    val isLoading: Observable<Boolean>
+        get() = this.isLoadingSubject
 
     val allWidgets: List<WeatherWidget>
         get() = this.widgetProvider.widgets
@@ -44,8 +51,11 @@ class WeatherGridViewModel(private val forecastRepo: ForecastRepository,
         this.overalStatusViewModel.updateWidgets(this.storedWidgets)
     }
 
-    fun refreshData(lat: Float, lon: Float): Observable<List<WeatherWidget>> {
-        return this.forecastRepo.getCurrentForecast("404453f2e4b605045cc0e7c06a7efd95", lat, lon).subscribeOn(Schedulers.io()).flatMap{
+    fun loadData(locationId: String): Observable<List<WeatherWidget>> {
+        this.isLoadingSubject.onNext(true)
+        var location = this.locationRepository.getLocationById(locationId)
+        return this.forecastRepo.getCurrentForecast(settingsService.getStringValue(R.string.weather_api_key), location!!.lat!!.toFloat(), location!!.lng!!.toFloat()).subscribeOn(Schedulers.io()).toObservable().flatMap{
+            this.isLoadingSubject.onNext(false)
             this.activeWidgets
         }
     }

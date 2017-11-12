@@ -6,5 +6,7 @@ package uk.co.jbrunton.droneforecast.models
 class ForecastResponse (
     val latitude: Float,
     val longitude: Float,
-    val currently: ForecastItemResponse
+    val currently: ForecastItemResponse,
+    val minutely: ForecastFutureResponse,
+    val hourly: ForecastFutureResponse
 )

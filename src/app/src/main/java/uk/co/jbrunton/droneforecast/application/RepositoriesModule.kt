@@ -2,9 +2,11 @@ package uk.co.jbrunton.droneforecast.application
 
 import dagger.Module
 import dagger.Provides
+import io.realm.Realm
 import uk.co.jbrunton.droneforecast.proxies.ForecastProxy
-import javax.inject.Singleton
 import uk.co.jbrunton.droneforecast.repositories.ForecastRepository
+import uk.co.jbrunton.droneforecast.repositories.LocationRepository
+import javax.inject.Singleton
 
 
 /**
@@ -16,5 +18,11 @@ class RepositoriesModule {
     @Singleton
     fun provideForecastRepository(forecastProxy: ForecastProxy): ForecastRepository {
         return ForecastRepository(forecastProxy)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationsRepository(): LocationRepository {
+        return LocationRepository(Realm.getDefaultInstance())
     }
 }

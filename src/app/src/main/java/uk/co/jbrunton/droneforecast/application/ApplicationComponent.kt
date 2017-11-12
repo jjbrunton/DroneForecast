@@ -2,8 +2,9 @@ package uk.co.jbrunton.droneforecast.application
 
 import dagger.Component
 import uk.co.jbrunton.droneforecast.activities.MainActivity
+import uk.co.jbrunton.droneforecast.activities.WeatherViewActivity
+import uk.co.jbrunton.droneforecast.fragments.LocationsListFragment
 import uk.co.jbrunton.droneforecast.fragments.SettingsFragment
-import uk.co.jbrunton.droneforecast.fragments.WeatherGridFragment
 import javax.inject.Singleton
 
 /**
@@ -16,7 +17,9 @@ interface ApplicationComponent {
 
     fun inject(mainActivity: MainActivity)
 
-    fun inject(weatherGridFragment: WeatherGridFragment)
+    fun inject(weatherViewActivity: WeatherViewActivity)
 
     fun inject(settingsFragment: SettingsFragment)
+
+    fun inject(locationsListFragment: LocationsListFragment)
 }
