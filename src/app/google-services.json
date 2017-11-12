@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1021103610719",
+    "firebase_url": "https://droneforecast-87677.firebaseio.com",
+    "project_id": "droneforecast-87677",
+    "storage_bucket": "droneforecast-87677.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021103610719:android:bb8d19eeb0de3880",
+        "android_client_info": {
+          "package_name": "uk.co.jbrunton.droneforecast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021103610719-9gn0se8vlo89dbrgtal1uggdbac58877.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.co.jbrunton.droneforecast",
+            "certificate_hash": "11ea148ba092bd63edb00d9de7b9e09d7613b03c"
+          }
+        },
+        {
+          "client_id": "1021103610719-9kvlocj9vrbdn5ua7g92gara4c7stpno.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.co.jbrunton.droneforecast",
+            "certificate_hash": "4c7e7f56a9a3b8e6559a49d9ac94245ee1346fa2"
+          }
+        },
+        {
+          "client_id": "1021103610719-tqulejkcgn7q2di05sb9tnbdeo3fi49m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJWp5DqwHYEdebTtGS_6aG9v-F6e3ZR8k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021103610719-tqulejkcgn7q2di05sb9tnbdeo3fi49m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
