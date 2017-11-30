@@ -47,7 +47,13 @@ class WindSpeedWidget(private val forecastStream: Observable<ForecastResponse>, 
         }
     override val widgetWeatherState: Observable<WeatherStatus>
         get() = forecastStream.map {
-            WeatherStatus.OK
+            val windToConverter = SI.METERS_PER_SECOND.getConverterTo(settingsService.getWindUnit())
+            val windUnit = windToConverter.convert(Measure.valueOf(it.currently.windSpeed, SI.METRES_PER_SECOND).doubleValue(SI.METRES_PER_SECOND))
+            when {
+                windUnit > this.settingsService.getMaxWindSpeed().toDouble() -> WeatherStatus.PROBLEM
+                windUnit > (this.settingsService.getMaxWindSpeed().toDouble()*0.9) -> WeatherStatus.WARNING
+                else -> WeatherStatus.OK
+            }
         }
 
     override val widgetView: Observable<View>

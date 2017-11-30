@@ -111,6 +111,7 @@ class WeatherViewActivity: RxAppCompatActivity(), OnDragStartListener {
     private fun refreshItems() {
         if (this.intent.hasExtra("locationId")) {
             this.viewModel.loadData(this.intent.getStringExtra("locationId")).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                this.swipeRefreshLayout.isRefreshing = false
             })
 
             this.viewModel.overallText.bindToLifecycle(this).observeOn(AndroidSchedulers.mainThread()).subscribe {
